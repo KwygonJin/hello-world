@@ -132,6 +132,8 @@ public class MainClass {
 		arrayList.add(icollStackA);
 		arrayList.add(icollStackAL);
 		System.out.println(arrayList);
+		icollQueueA.push("11");
+		System.out.println(arrayList);
 	}
 
 }
