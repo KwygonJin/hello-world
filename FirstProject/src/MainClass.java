@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class MainClass {
 
@@ -123,6 +124,14 @@ public class MainClass {
 		System.out.println(icollQueueA.pop());
 		System.out.println("Size: " + icollQueueA.getSize());
 		System.out.println(icollQueueA);	
-	 }
+		
+		//Create ArrayList of object with interface ICollection
+		ArrayList<ICollection> arrayList = new ArrayList<ICollection>();
+		arrayList.add(icollQueueA);
+		arrayList.add(icollQueueAL);
+		arrayList.add(icollStackA);
+		arrayList.add(icollStackAL);
+		System.out.println(arrayList);
+	}
 
 }
