@@ -90,7 +90,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 		}
 		return cont;
 	}
-
+	
 	@Override
 	public T get(int position) {
 		// TODO Auto-generated method stub
