@@ -6,19 +6,19 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	private int counter = 0;
 	
 	public class Node {
-		private T t;
+		private T data;
 		Node next;
 		
 		Node(T link) {
-			t = link;
+			data = link;
 		}
 		
 		public void set(T t) {
-			this.t = t;
+			this.data = t;
 		}
 		
 		public T get() {
-			return t;
+			return data;
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 			return;
 		}
 		
-		if (t == first.t) {
+		if (t.equals(first.data)) {
 			first = first.next;
 			return;
 		}
@@ -66,7 +66,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 			if (temp.get().equals(t)) {
 				tempPrev.next = temp.next;				
 				counter--;
-				if (t == last.t) {
+				if (t.equals(last.data)) {
 					last = tempPrev;
 				}
 				break;				
@@ -176,7 +176,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 				return;
 			}	
 			
-			if (nextIt.t == null) {
+			if (nextIt.data == null) {
 				System.out.println("null argument remove");
 				return;
 			}		
@@ -194,11 +194,11 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 			Node tempPrev = null; 
 
 			while(temp != null) {
-				if (temp.get().equals(nextIt.t)) {
+				if (temp.get().equals(nextIt.data)) {
 					if (tempPrev != null) {
 						tempPrev.next = temp.next;
 					}
-					if (nextIt == last) {
+					if (nextIt.equals(last)) {
 						last = tempPrev;
 					}
 					//nextIt = temp.next;
