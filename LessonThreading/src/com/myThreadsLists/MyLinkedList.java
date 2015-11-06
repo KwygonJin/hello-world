@@ -1,9 +1,11 @@
+package com.myThreadsLists;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	private Node first;
 	private Node last;
-	private int counter = 0;
+	private AtomicInteger counter = new AtomicInteger(0);
 	
 	private class Node {
 		T data;
@@ -15,7 +17,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	}
 	
 	@Override
-	public boolean add(T t) {
+	public synchronized boolean add(T t) {
 		if (t == null)
 			return false;
 		
@@ -26,13 +28,13 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 		}
 		last.next = node;
 		last = node;		
-		counter++;
+		counter.getAndIncrement();
 			
 		return true;	
 	}
 
 	@Override
-	public void remove(T t) {
+	public synchronized void remove(T t) {
 		if (t == null)
 			return;	
 		if (first == null)
@@ -47,7 +49,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	}
 
 	@Override
-	public boolean contains(T t) {
+	public synchronized boolean contains(T t) {
 		Node temp = first;
 		boolean cont = false;
 		while(temp != null) {
@@ -61,14 +63,14 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	}
 	
 	@Override
-	public T get(int position) {
-		if (position >= counter) {
+	public synchronized T get(int position) {
+		if (position >= counter.intValue()) {
 			System.out.println("Position mismath");
 			return null;
 		}
 		if (position == 0)
 			return first.data;
-		if (position + 1 == counter) {
+		if (position + 1 == counter.intValue()) {
 			return last.data;
 		}
 		
@@ -85,22 +87,22 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 
 	@Override
 	public int size() {
-		return counter;
+		return counter.intValue();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return counter == 0;
+		return counter.intValue() == 0;
 	}
 
 	@Override
-	public void clear() {
+	public synchronized void clear() {
 		first = null;
 		last = null;
 	}
 
 	@Override
-	public Iterator<T> iterator() {
+	public synchronized Iterator<T> iterator() {
 		return new MyIterator<T>();
 	}
 	
@@ -109,7 +111,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	         return null; //проверяем конец списка
 	     if (currNode.data.equals(baseT)) {
 	    	prevNode.next = currNode.next;	
-	    	counter--;
+	    	counter.decrementAndGet();
 	     	if (baseT.equals(last.data))
 				last = prevNode;
 	     	return null;
@@ -117,6 +119,7 @@ public class MyLinkedList<T> implements IMyCollections<T>, Iterable<T>{
 	     return getRec(baseT, currNode.next, currNode);
 	}
 	
+	@SuppressWarnings("hiding")
 	private class MyIterator<T> implements Iterator<T> {
 		public Node nextIt;
 

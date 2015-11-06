@@ -46,11 +46,14 @@ public class MainClassLinkedList {
 		Iterator<String> it = linkedList.iterator();
 		System.out.println("It has next: " + it.hasNext());
 		System.out.println("Clear");
-		it = linkedList.iterator();
-		while (it.hasNext()) {
-			System.out.println("Removing: " + it.next());
-			it.remove();
-		}
+//		for (Iterator<String> itForEach = linkedList.iterator(); itForEach.hasNext();) {
+//			System.out.println("Removing: " + itForEach.next());
+//			itForEach.remove();			
+//		}
+		for (String string : linkedList) {
+			System.out.println("Removing: " + string);
+			linkedList.remove(string);					
+		}	
 		it = linkedList.iterator();
 		while (it.hasNext()) {
 			System.out.println(it.next());
